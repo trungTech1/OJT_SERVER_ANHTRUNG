@@ -13,7 +13,7 @@ import java.util.Set;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-@Table(name = "user_role")
+@Table(name = "roles")
 @Entity
 public class UserRole {
     @Id
@@ -25,5 +25,5 @@ public class UserRole {
     private RoleNameEnum roleName;
 
     @ManyToMany(mappedBy = "roles")
-    private Set<UserModel> users = new HashSet<>();
+private Set<UserModel> users = new HashSet<>();
 }
