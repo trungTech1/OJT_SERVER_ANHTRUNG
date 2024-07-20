@@ -6,6 +6,7 @@ import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
@@ -37,7 +38,7 @@ public class UserModel {
     private String full_name = null;
 
     @Column(name = "avatar", length = 255)
-    private String avatar = null;
+    private String avatar = "http://localhost:9999/noavt.jpg";
 
     @Column(name = "point")
     private Double point = null;
@@ -54,12 +55,13 @@ public class UserModel {
     @Column(name = "updated_at")
     private Date updated_at = null;
 
-  @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-@JoinTable(
-    name = "user_role",
-    joinColumns = @JoinColumn(name = "user_id"),
-    inverseJoinColumns = @JoinColumn(name = "role_id")
-)
-private Set<UserRole> roles = new HashSet<>();
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinTable(
+            name = "user_role",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id")
+    )
+    private Set<UserRole> roles;
+
 
 }
