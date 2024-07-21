@@ -24,6 +24,5 @@ public class UserRole {
     @Column(name = "role_name")
     private RoleNameEnum roleName;
 
-    @ManyToMany(mappedBy = "roles")
-private Set<UserModel> users = new HashSet<>();
+
 }
