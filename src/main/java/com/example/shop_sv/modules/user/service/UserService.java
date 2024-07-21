@@ -8,6 +8,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class UserService {
@@ -36,6 +37,13 @@ public class UserService {
     //search user by name
     public List<UserModel> searchUserByName(String name) {
         return userRepository.findByUsernameIgnoreCaseContaining(name);
+    }
+    public Optional<UserModel> findById(Integer id) {
+        return userRepository.findById(id);
+    }
+    //save user
+    public void save(UserModel userModel) {
+        userRepository.save(userModel);
     }
 
 }
