@@ -19,7 +19,6 @@ import java.util.Set;
 public class UserModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @NotNull
     private Integer id;
 
     @Column(name = "username", length = 255)
@@ -45,15 +44,17 @@ public class UserModel {
 
     @Column(name = "status")
     private Boolean status = true;
+    private boolean isVerified = false; // true: verified, false: not verified
 
     @Column(name = "is_deleted")
-    private Boolean is_deleted = null;
+    private Boolean is_deleted = false;
+    private String permission = ""; // ex: "read,write,delete"
 
     @Column(name = "created_at")
-    private Date created_at = null;
+    private String created_at ;
 
     @Column(name = "updated_at")
-    private Date updated_at = null;
+    private String updated_at ;
 
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinTable(
