@@ -46,4 +46,8 @@ public class UserService {
         userRepository.save(userModel);
     }
 
+    //check user exists
+    public UserModel findUserByInfor(String id){
+        return userRepository.findUserByInfor(id);
+    }
 }
