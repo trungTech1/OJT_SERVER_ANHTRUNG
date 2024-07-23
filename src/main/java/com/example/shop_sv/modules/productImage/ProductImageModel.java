@@ -1,6 +1,7 @@
 package com.example.shop_sv.modules.productImage;
 
 import com.example.shop_sv.modules.product.ProductModel;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -24,7 +25,8 @@ public class ProductImageModel {
     @Column(name = "status")
     private Boolean status = true;
 
-    @ManyToOne
-    @JoinColumn(name = "product")
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "product_id")
+    @JsonIgnore
     private ProductModel product = null;
 }

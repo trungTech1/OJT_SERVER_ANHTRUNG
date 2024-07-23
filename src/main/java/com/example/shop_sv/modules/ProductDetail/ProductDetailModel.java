@@ -1,14 +1,18 @@
 package com.example.shop_sv.modules.ProductDetail;
 
 import com.example.shop_sv.modules.color.ColorModel;
+import com.example.shop_sv.modules.config.ConfigModel;
 import com.example.shop_sv.modules.product.ProductModel;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.util.List;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -42,8 +46,13 @@ public class ProductDetailModel {
     @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     private ColorModel color;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "product_id")
     @JsonBackReference
     private ProductModel product = null;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "config_id")
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+    private ConfigModel config = null;
 }
