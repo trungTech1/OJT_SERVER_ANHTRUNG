@@ -24,6 +24,5 @@ public class ColorModel {
 
     @Column(name = "status")
     private Boolean status = true;
-
-
+    
 }

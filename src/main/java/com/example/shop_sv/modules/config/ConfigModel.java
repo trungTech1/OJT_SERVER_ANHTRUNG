@@ -1,6 +1,7 @@
 package com.example.shop_sv.modules.config;
 
 import com.example.shop_sv.modules.ProductDetail.ProductDetailModel;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -22,10 +23,6 @@ public class ConfigModel {
     @Column(name = "config_name", length = 255)
     private String configName = null;
 
-    @Column(name = "status", length = 255)
+    @Column(name = "status")
     private Boolean status = true;
-
-    @ManyToOne
-    @JoinColumn(name = "product_detail_id")
-    private ProductDetailModel productDetail;
 }

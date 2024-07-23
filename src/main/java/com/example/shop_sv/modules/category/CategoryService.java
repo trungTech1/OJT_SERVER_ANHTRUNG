@@ -46,4 +46,8 @@ public class CategoryService {
             }
         }
     }
+
+    public CategoryModel findById(Integer id){
+        return categoryRepository.findById(Long.valueOf(id)).orElse(null);
+    }
 }

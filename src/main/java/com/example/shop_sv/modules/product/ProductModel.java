@@ -3,6 +3,7 @@ package com.example.shop_sv.modules.product;
 import com.example.shop_sv.modules.ProductDetail.ProductDetailModel;
 import com.example.shop_sv.modules.brand.BrandModel;
 import com.example.shop_sv.modules.category.CategoryModel;
+import com.example.shop_sv.modules.productImage.ProductImageModel;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -55,6 +56,10 @@ public class ProductModel {
     @JoinColumn(name = "category_id")
     @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     private CategoryModel category = null;
+
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private List<ProductImageModel> images;
+
 
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
     @JsonManagedReference
