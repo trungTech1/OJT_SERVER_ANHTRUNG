@@ -52,8 +52,8 @@ public class JwtService {
             Integer id = Integer.parseInt(jwt.getClaim("id").asString());
             user.setId(id);
 
-            String userName = jwt.getClaim("userName").asString();
-            user.setUsername(userName);
+            String username = jwt.getClaim("username").asString();
+            user.setUsername(username);
 
             String email = jwt.getClaim("email").asString();
             user.setEmail(email);
@@ -69,8 +69,8 @@ public class JwtService {
             String permission = jwt.getClaim("permission").asString();
             user.setPermission(permission);
 
-            String avatarUrl = jwt.getClaim("avatarUrl").asString();
-            user.setAvatar(avatarUrl);
+            String avatar = jwt.getClaim("avatar").asString();
+            user.setAvatar(avatar);
 
             Boolean status = Boolean.valueOf(jwt.getClaim("status").asString());
             user.setStatus(status);

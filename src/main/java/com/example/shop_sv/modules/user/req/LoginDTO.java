@@ -9,9 +9,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Data
 public class LoginDTO {
-    @NotBlank(message = "Khong duoc de trong")
-
+    @NotBlank(message = "Không được để trống")
     private String username;
-    @NotBlank(message = "Khong duoc de trong")
+    @NotBlank(message = "Không được để trống")
     private String password;
 }

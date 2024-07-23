@@ -1,5 +1,6 @@
 package com.example.shop_sv.modules.user.controller;
 
+import com.example.shop_sv.modules.jwt.JwtService;
 import com.example.shop_sv.modules.user.UserModel;
 import com.example.shop_sv.modules.user.req.LoginDTO;
 import com.example.shop_sv.modules.user.req.RegisterDTO;
@@ -118,7 +119,7 @@ public class UserController {
             }
 
 
-//            String token = JwtService.createTokenUser(user);
+            String token = JwtService.createTokenUser(user);
 
 //            JedisPool jedisPool = new JedisPool("localhost", 6379);
 //            try (Jedis jedis = jedisPool.getResource()) {
@@ -128,7 +129,7 @@ public class UserController {
 
             Map<String, Object> response = new HashMap<>();
             response.put("message", "Đăng nhập thành công");
-//            response.put("token", token);
+            response.put("token", token);
 
 
             return new ResponseEntity<>(response, HttpStatus.OK);
@@ -137,4 +138,15 @@ public class UserController {
             return new ResponseEntity<>(e, HttpStatus.BAD_REQUEST);
         }
     }
+
+    //lay thong tin user
+    @GetMapping("/verify")
+public ResponseEntity<Object> info(@RequestHeader("token") String token) {
+    UserModel user = JwtService.verifyTokenUser(token);
+    if (user != null) {
+        return new ResponseEntity<>(user, HttpStatus.OK);
+    } else {
+        return new ResponseEntity<>("Invalid token", HttpStatus.UNAUTHORIZED);
+    }
+}
 }
