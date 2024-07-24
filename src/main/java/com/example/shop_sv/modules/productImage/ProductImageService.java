@@ -13,4 +13,9 @@ public class ProductImageService {
     public List<ProductImageModel> saveAll(List<ProductImageModel> productImageModels) {
         return productImageRepository.saveAll(productImageModels);
     }
+
+    public void deleteAllByProductId(Byte productId) {
+        productImageRepository.deleteAllByProductId(productId);
+    }
+
 }
