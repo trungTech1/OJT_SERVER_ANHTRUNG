@@ -61,7 +61,8 @@ public class ProductModel {
     private List<ProductImageModel> images;
 
 
-    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
+    @OneToMany
+    @JoinColumn(name = "product_id")
     @JsonManagedReference
     private List<ProductDetailModel> productDetails;
 }

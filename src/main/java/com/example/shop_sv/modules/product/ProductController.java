@@ -46,4 +46,17 @@ public class ProductController {
             return new ResponseEntity<> ("Error", HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+    @PutMapping("/update/{id}")
+    public ResponseEntity<Object> updateProduct(@PathVariable Byte id, @RequestBody ProductCreateDTO productCreateDTO) {
+        System.out.println("đang chạy" + id + productCreateDTO.getProductName());
+        try {
+            ProductModel productModel = productService.update(id, productCreateDTO);
+            System.out.println("ã vào đây12312");
+            return new ResponseEntity<> (productModel, HttpStatus.OK);
+        } catch (Exception e) {
+            System.out.println("ã vào đây12312" + e.getMessage());
+            return new ResponseEntity<> ("Error", HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 }
