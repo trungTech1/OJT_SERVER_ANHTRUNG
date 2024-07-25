@@ -61,6 +61,9 @@ public class JwtService {
             String phone = jwt.getClaim("phone").asString();
             user.setPhone(phone);
 
+            String full_name = jwt.getClaim("full_name").asString();
+            user.setFull_name(full_name);
+
             String role = jwt.getClaim("role").asString();
 
 //            RoleNameEnum roleName = RoleNameEnum.valueOf(role);
@@ -75,16 +78,16 @@ public class JwtService {
             Boolean status = Boolean.valueOf(jwt.getClaim("status").asString());
             user.setStatus(status);
 
-            Boolean isDeleted = Boolean.valueOf(jwt.getClaim("isDeleted").asString());
+            Boolean isDeleted = Boolean.valueOf(jwt.getClaim("is_deleted").asString());
             user.setIs_deleted(isDeleted);
 
             Boolean isVerified = Boolean.valueOf(jwt.getClaim("isVerified").asString());
             user.setVerified(isVerified);
 
-            String createAt = jwt.getClaim("createAt").asString();
+            String createAt = jwt.getClaim("created_at").asString();
             user.setCreated_at(createAt);
 
-            String updateAt = jwt.getClaim("updateAt").asString();
+            String updateAt = jwt.getClaim("updated_at").asString();
             user.setUpdated_at(updateAt);
 
             return user;

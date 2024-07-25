@@ -12,20 +12,20 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Data
 public class RegisterDTO {
-    @NotBlank(message = "Khong duoc de trong")
-    @Size(min = 4, max = 20, message = "Do dai tu 6 den 20 ky tu")
+    @NotBlank(message = "Tài khoản không được để trống")
+    @Size(min = 4, max = 20, message = "Tài khoản phải có từ 6 đến 20 ký tự")
     @UniqueField(fieldName = "userName", message = "Tài khoản đã tồn tại")
 
     String username;
-    @NotBlank(message = "Khong duoc de trong")
-    @Size(min = 4, max = 20, message = "Do dai tu 6 den 20 ky tu")
+    @NotBlank(message = "Mật khẩu không được để trống")
+    @Size(min = 4, max = 20, message = "Mật khẩu phải có từ 4 đến 20 ký tự")
     String password;
-    @NotBlank(message = "Khong duoc de trong")
-    @Email(message = "Email khong hop le")
+    @NotBlank(message = "Email không được để trống")
+    @Email(message = "Email không đúng định dạng")
     @UniqueField(fieldName = "email", message = "Email đã tồn tại")
     String email;
-    @NotBlank(message = "Khong duoc de trong")
-    @Size(min = 10, max = 10, message = "Do dai 10 ky tu")
+    @NotBlank(message = "Số điện thoại không được để trống")
+    @Size(min = 10, max = 10, message = "Số điện thoại phải có 10 số")
     @UniqueField(fieldName = "phone", message = "Số điện thoại đã tồn tại")
     String phone;
 

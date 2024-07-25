@@ -50,4 +50,9 @@ public class UserService {
     public UserModel findUserByInfor(String id){
         return userRepository.findUserByInfor(id);
     }
+
+    //change information user without password
+    public void changeInforUserWithoutPassword(String id, String username, String email, String phone, String full_name){
+        userRepository.changeInforUserWithoutPassword(id, username, email, phone, full_name);
+    }
 }

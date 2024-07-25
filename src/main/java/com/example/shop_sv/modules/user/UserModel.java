@@ -51,10 +51,10 @@ public class UserModel {
     private String permission = ""; // ex: "read,write,delete"
 
     @Column(name = "created_at")
-    private String created_at ;
+    private String created_at = new Date().toString();
 
     @Column(name = "updated_at")
-    private String updated_at ;
+    private String updated_at = new Date().toString();
 
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinTable(
