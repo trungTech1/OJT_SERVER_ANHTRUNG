@@ -44,7 +44,7 @@ public class ProductDetailModel {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "color_id")
     @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-    private ColorModel color;
+    private ColorModel color = null;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "product_id")

@@ -20,4 +20,8 @@ public class ConfigService {
         configModel.setConfigName(config.getConfigName());
         return configRepository.save(configModel);
     }
+
+    public ConfigModel findById(Integer id) {
+        return configRepository.findById(Byte.valueOf(String.valueOf(id))).orElse(null);
+    }
 }

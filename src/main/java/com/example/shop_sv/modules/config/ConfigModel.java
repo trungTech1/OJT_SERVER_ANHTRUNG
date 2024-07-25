@@ -15,7 +15,6 @@ import lombok.NoArgsConstructor;
 @Entity
 @Builder
 public class ConfigModel {
-
     @Id
     @GeneratedValue( strategy = GenerationType.IDENTITY)
     private Byte id;

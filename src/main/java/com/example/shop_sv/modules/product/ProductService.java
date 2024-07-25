@@ -108,4 +108,8 @@ public class ProductService {
 
         return savedProduct;
     }
+
+    public ProductModel findById(Integer id) {
+        return productRepository.findById(Byte.valueOf(String.valueOf(id))).orElse(null);
+    }
 }
