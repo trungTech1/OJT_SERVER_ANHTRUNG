@@ -3,11 +3,15 @@ package com.example.shop_sv.modules.product;
 
 import com.example.shop_sv.modules.product.dto.request.ProductCreateDTO;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.aop.AopAutoConfiguration;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 
 @RestController
@@ -17,13 +21,25 @@ public class ProductController {
     ProductService productService;
 
     @GetMapping("")
-    public ResponseEntity<Object> getAllProduct() {
-        try {
-            List<ProductModel> productModels = productService.findAll();
-            return new ResponseEntity<> (productModels, HttpStatus.OK);
-        } catch (Exception e) {
-            return new ResponseEntity<> ("Error", HttpStatus.INTERNAL_SERVER_ERROR);
+    public ResponseEntity<Map<String, Object>> getProducts(
+            @RequestParam(defaultValue = "") String search,
+            @RequestParam(defaultValue = "all") String filterStatus,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size) {
+        Boolean statusBoolean = null;
+        if ("active".equals(filterStatus)) {
+            statusBoolean = true;
+        } else if ("inactive".equals(filterStatus)) {
+            statusBoolean = false;
         }
+        Page<ProductModel> productPage = productService.getProducts(search, statusBoolean, page, size);
+        Map<String, Object> response = new HashMap<>();
+        response.put("products", productPage.getContent());
+        response.put("currentPage", productPage.getNumber());
+        response.put("totalItems", productPage.getTotalElements());
+        response.put("totalPages", productPage.getTotalPages());
+
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
     @PostMapping("/create")

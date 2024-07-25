@@ -8,9 +8,13 @@ import com.example.shop_sv.modules.product.dto.request.ProductCreateDTO;
 import com.example.shop_sv.modules.productImage.ProductImageModel;
 import com.example.shop_sv.modules.productImage.ProductImageService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -27,16 +31,29 @@ public class ProductService {
 
     public ProductModel save(ProductCreateDTO productCreateDTO) {
         ProductModel productModel = new ProductModel();
+        //set các giá trị cho product VAF NEEUS ADD PRODUCT THÌ SET CREATED_AT
+        productModel.setCreated_at(new Date());
         return getProductModel(productCreateDTO, productModel);
     }
 
-    public List<ProductModel> findAll() {
-        return productRepository.findAll();
+    public Page<ProductModel> getProducts(String search, Boolean status, int page, int size) {
+        Pageable pageable = PageRequest.of(page, size);
+
+        if (search != null && !search.isEmpty() && status != null) {
+            return productRepository.findByProductNameContainingIgnoreCaseAndStatus(search, status, pageable);
+        } else if (search != null && !search.isEmpty()) {
+            return productRepository.findByProductNameContainingIgnoreCase(search, pageable);
+        } else if (status != null) {
+            return productRepository.findByStatus(status, pageable);
+        } else {
+            return productRepository.findAll(pageable);
+        }
     }
+
 
     public void delete(Byte id) {
         //dđôi lại status của product
-        if(productRepository.findById(id).isEmpty()) {
+        if (productRepository.findById(id).isEmpty()) {
             throw new RuntimeException("Product not found");
         }
         ProductModel productModel = productRepository.findById(id).get();
@@ -45,10 +62,10 @@ public class ProductService {
     }
 
     public ProductModel update(Byte id, ProductCreateDTO productCreateDTO) {
-       if(productRepository.findById(id).isEmpty()) {
-           throw new RuntimeException("Product not found");
-       }
-         ProductModel productModel = productRepository.findById(id).get();
+        if (productRepository.findById(id).isEmpty()) {
+            throw new RuntimeException("Product not found");
+        }
+        ProductModel productModel = productRepository.findById(id).get();
         return getProductModel(productCreateDTO, productModel);
     }
 
@@ -56,19 +73,19 @@ public class ProductService {
         boolean isUpdate = productModel.getId() != null;
         productModel.setProductName(productCreateDTO.getProductName());
         productModel.setDescription(productCreateDTO.getDescription());
-        if(productCreateDTO.getSku() != null) {
+        if (productCreateDTO.getSku() != null) {
             productModel.setSku(productCreateDTO.getSku());
         }
 
         if (productCreateDTO.getBrandId() != null) {
             productModel.setBrand(brandService.findById(productCreateDTO.getBrandId().byteValue()));
-        }else {
+        } else {
             productModel.setBrand(null);
         }
 
         if (productCreateDTO.getCategoryId() != null) {
             productModel.setCategory(categoryService.findById(productCreateDTO.getCategoryId()));
-        }else {
+        } else {
             productModel.setCategory(null);
         }
 
@@ -83,7 +100,7 @@ public class ProductService {
         List<ProductImageModel> productImageModels = new ArrayList<>();
         if (isUpdate) {
             // Nếu là cập nhật, xóa hình ảnh cũ
-            try{
+            try {
                 imageService.deleteAllByProductId(savedProduct.getId());
             } catch (Exception e) {
                 e.printStackTrace();
