@@ -29,7 +29,7 @@ public class BannerModel {
     private Boolean status = true;
 
     @Column(name = "created_at", length = 255)
-    private Date created_at = null;
+    private Date created_at = new Date();
 
     @Column(name = "description", length = 255)
     private String description = null;
