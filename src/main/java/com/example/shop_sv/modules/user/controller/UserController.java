@@ -83,8 +83,8 @@ public class UserController {
             user.setPassword(BCrypt.hashpw(data.getPassword(), BCrypt.gensalt()));
             user.setEmail(data.getEmail());
             user.setPhone(data.getPhone());
-            user.setCreated_at(String.valueOf(System.currentTimeMillis()));
-            user.setUpdated_at(String.valueOf(System.currentTimeMillis()));
+            user.setCreated_at(new Date().toString());
+            user.setUpdated_at(null);
             userService.save(user);
 
             // ArrayList<String> mails = new ArrayList<>();
@@ -141,12 +141,35 @@ public class UserController {
 
     //lay thong tin user
     @GetMapping("/verify")
-public ResponseEntity<Object> info(@RequestHeader("token") String token) {
-    UserModel user = JwtService.verifyTokenUser(token);
-    if (user != null) {
-        return new ResponseEntity<>(user, HttpStatus.OK);
-    } else {
-        return new ResponseEntity<>("Invalid token", HttpStatus.UNAUTHORIZED);
+    public ResponseEntity<Object> info(@RequestHeader("token") String token) {
+        UserModel user = JwtService.verifyTokenUser(token);
+        if (user != null) {
+            return new ResponseEntity<>(user, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>("Invalid token", HttpStatus.UNAUTHORIZED);
+        }
     }
-}
+
+    @PostMapping("/changeInfor")
+    public ResponseEntity<Object> changeInfor(@RequestBody UserModel userModel) {
+        // Retrieve the existing user from the database
+        Optional<UserModel> existingUserOptional = userService.findById(userModel.getId());
+        if (existingUserOptional.isPresent()) {
+            UserModel existingUser = existingUserOptional.get();
+
+            // Update only the fields that need to be changed
+            existingUser.setUsername(userModel.getUsername());
+            existingUser.setEmail(userModel.getEmail());
+            existingUser.setPhone(userModel.getPhone());
+            existingUser.setFull_name(userModel.getFull_name());
+            existingUser.setUpdated_at(new Date().toString());
+
+            // Save the updated user back to the database
+            userService.save(existingUser);
+
+            return new ResponseEntity<>("Thay đổi thông tin thành công", HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>("User not found", HttpStatus.NOT_FOUND);
+        }
+    }
 }
