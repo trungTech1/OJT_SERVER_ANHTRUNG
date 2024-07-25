@@ -20,4 +20,8 @@ public class ColorService {
         colorModel.setColorName(color.getColorName());
         return colorRepository.save(colorModel);
     }
+
+    public ColorModel findById(Integer id) {
+        return colorRepository.findById(Byte.valueOf(String.valueOf(id))).orElse(null);
+    }
 }
