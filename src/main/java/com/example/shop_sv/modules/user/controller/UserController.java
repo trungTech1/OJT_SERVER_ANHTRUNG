@@ -2,6 +2,7 @@ package com.example.shop_sv.modules.user.controller;
 
 import com.example.shop_sv.modules.jwt.JwtService;
 import com.example.shop_sv.modules.user.UserModel;
+import com.example.shop_sv.modules.user.req.ChangePasswordDTO;
 import com.example.shop_sv.modules.user.req.LoginDTO;
 import com.example.shop_sv.modules.user.req.RegisterDTO;
 import com.example.shop_sv.modules.user.service.UserService;
@@ -168,6 +169,24 @@ public class UserController {
             userService.save(existingUser);
 
             return new ResponseEntity<>("Thay đổi thông tin thành công", HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>("User not found", HttpStatus.NOT_FOUND);
+        }
+    }
+    //thay doi password
+        @PostMapping("/changePassword")
+    public ResponseEntity<Object> changePassword(@RequestBody ChangePasswordDTO userModel) {
+        // Retrieve the existing user from the database
+        Optional<UserModel> existingUserOp = userService.findById(userModel.getId());
+//            System.out.println("userModel.getPassword() = " + userModel.getNewPassword() + "userModel.getId() = " + userModel.getId());
+        if (existingUserOp.isPresent()) {
+            UserModel existingUser = existingUserOp.get();
+            if (!BCrypt.checkpw(userModel.getOldPassword(), existingUser.getPassword())) {
+                return new ResponseEntity<>("Mật khẩu cũ không đúng", HttpStatus.BAD_REQUEST);
+            }
+            existingUser.setPassword(BCrypt.hashpw(userModel.getNewPassword(), BCrypt.gensalt()));
+            userService.save(existingUser);
+            return new ResponseEntity<>("Thay đổi mật khẩu thành công", HttpStatus.OK);
         } else {
             return new ResponseEntity<>("User not found", HttpStatus.NOT_FOUND);
         }
