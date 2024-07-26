@@ -30,7 +30,7 @@ public class ProductModel {
     private Byte id;
 
     @Column(name = "product_name", length = 255)
-    private String ProductName = null;
+    private String productName = null;
 
     @Column(name = "description", length = 255)
     private String description = null;
