@@ -181,7 +181,7 @@ public class UserController {
 //            System.out.println("userModel.getPassword() = " + userModel.getNewPassword() + "userModel.getId() = " + userModel.getId());
         if (existingUserOp.isPresent()) {
             UserModel existingUser = existingUserOp.get();
-            if (!BCrypt.checkpw(userModel.getOldPassword(), existingUser.getPassword())) {
+            if (!BCrypt.checkpw(userModel.getCurrentPassword(), existingUser.getPassword())) {
                 return new ResponseEntity<>("Mật khẩu cũ không đúng", HttpStatus.BAD_REQUEST);
             }
             existingUser.setPassword(BCrypt.hashpw(userModel.getNewPassword(), BCrypt.gensalt()));
