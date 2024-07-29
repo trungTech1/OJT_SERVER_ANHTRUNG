@@ -65,4 +65,6 @@ public class ProductModel {
     @JoinColumn(name = "product_id")
     @JsonManagedReference
     private List<ProductDetailModel> productDetails;
+
+
 }

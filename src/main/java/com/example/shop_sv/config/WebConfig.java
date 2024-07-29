@@ -3,6 +3,7 @@ package com.example.shop_sv.config;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration
@@ -21,13 +22,11 @@ public class WebConfig implements WebMvcConfigurer{
         };
     }
 
-//    @Bean
-//    public WebMvcConfigurer corsConfigurer() {
-//        return new WebMvcConfigurer() {
-//            @Override
-//            public void addCorsMappings(CorsRegistry registry) {
-//                registry.addMapping("/**").allowedOrigins("*");
-//            }
-//        };
-//    }
+    @Override
+    public void addInterceptors(InterceptorRegistry registry) {
+        registry.addInterceptor(new AuthenInterceptor())
+                .addPathPatterns("/cart/create")
+                .addPathPatterns("/cart");
+        // Đường dẫn mà interceptor sẽ áp dụng, ví dụ "/*" hoặc "/api/**"
+    }
 }

@@ -56,4 +56,5 @@ public class ProductDetailModel {
     @JsonManagedReference
     private List<ProductDetailImageModel> productDetailImages;
 
+
 }

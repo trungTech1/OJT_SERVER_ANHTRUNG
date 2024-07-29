@@ -106,6 +106,8 @@ public class UserController {
     @PostMapping("/login")
     public ResponseEntity<Object> login(@Valid @RequestBody LoginDTO data) {
         try {
+
+
             UserModel user = userService.findUserByInfor(data.getUsername());
 
             if (user == null) {
@@ -122,11 +124,11 @@ public class UserController {
 
             String token = JwtService.createTokenUser(user);
 
-//            JedisPool jedisPool = new JedisPool("localhost", 6379);
-//            try (Jedis jedis = jedisPool.getResource()) {
-//                jedis.set(String.valueOf(user.getId()), token);
-//            }
-//            jedisPool.close();
+            JedisPool jedisPool = new JedisPool("localhost", 6379);
+            try (Jedis jedis = jedisPool.getResource()) {
+                jedis.set(String.valueOf(user.getId()), token);
+            }
+            jedisPool.close();
 
             Map<String, Object> response = new HashMap<>();
             response.put("message", "Đăng nhập thành công");

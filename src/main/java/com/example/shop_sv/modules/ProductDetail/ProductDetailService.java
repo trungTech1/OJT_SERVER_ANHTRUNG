@@ -100,4 +100,5 @@ public class ProductDetailService {
         }
         return productDetailModel;
     }
+
 }

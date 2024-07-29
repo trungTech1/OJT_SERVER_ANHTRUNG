@@ -58,8 +58,8 @@ public class OrderModel {
     @Column(name = "total_discounted_price", length = 255)
     private Double totalDiscountedPrice = null;
 
-    @Column(name = "total_price_affter_coupons", length = 255)
-    private Double totalPriceAffterCoupons = null;
+    @Column(name = "total_price_after_coupons", length = 255)
+    private Double totalPriceAfterCoupons = null;
 
     @Column(name = "ward", length = 255)
     private String ward = null;
