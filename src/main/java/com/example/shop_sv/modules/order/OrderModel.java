@@ -26,7 +26,7 @@ public class OrderModel {
     private Date created_at = null;
 
     @Column(name = "status")
-    private OrderEnum status = OrderEnum.SHIPPING;
+    private OrderEnum status = OrderEnum.SHOPPING;
 
     @Column(name = "total_price")
     private Double totalPrice = null;
