@@ -127,6 +127,6 @@ public class ProductService {
     }
 
     public ProductModel findById(Integer id) {
-        return productRepository.findById(Byte.valueOf(String.valueOf(id))).orElse(null);
+        return productRepository.findById(id.byteValue()).orElse(null);
     }
 }

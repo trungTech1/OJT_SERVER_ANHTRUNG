@@ -13,8 +13,7 @@ import redis.clients.jedis.JedisPool;
 public class AuthenInterceptor implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-
-
+        // Thực thi trước khi request vào controller
         if (request.getMethod().equals("OPTIONS")) {
             return true;
         }
@@ -24,8 +23,6 @@ public class AuthenInterceptor implements HandlerInterceptor {
         UserModel user = JwtService.verifyTokenUser(token);
 
         if (user == null) {
-
-
             response.setStatus(401);
             System.out.println("token khong dungssssssssssss");
             return false;
@@ -43,9 +40,6 @@ public class AuthenInterceptor implements HandlerInterceptor {
             }
         }
         jedisPool.close();
-
-
-
         request.setAttribute("data", user);
         return true;
     }

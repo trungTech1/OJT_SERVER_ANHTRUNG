@@ -1,6 +1,8 @@
 package com.example.shop_sv.modules.product;
 
 
+import com.example.shop_sv.modules.ProductDetail.ProductDetailModel;
+import com.example.shop_sv.modules.ProductDetail.ProductDetailService;
 import com.example.shop_sv.modules.product.dto.request.ProductCreateDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.aop.AopAutoConfiguration;
@@ -19,6 +21,9 @@ import java.util.Map;
 public class ProductController {
     @Autowired
     ProductService productService;
+
+    @Autowired
+    ProductDetailService productDetailService;
 
     @GetMapping("")
     public ResponseEntity<Map<String, Object>> getProducts(
@@ -72,6 +77,17 @@ public class ProductController {
             return new ResponseEntity<> (productModel, HttpStatus.OK);
         } catch (Exception e) {
             System.out.println("ã vào đây12312" + e.getMessage());
+            return new ResponseEntity<> ("Error", HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<Object> getProduct(@PathVariable Integer id) {
+        System.out.println("đang chạy" + id);
+        try {
+            ProductDetailModel productModel = productDetailService.findById(id);
+            return new ResponseEntity<> (productModel, HttpStatus.OK);
+        } catch (Exception e) {
             return new ResponseEntity<> ("Error", HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
