@@ -4,6 +4,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
@@ -13,4 +15,6 @@ public class ProductDetailRequest {
     private Double unitPrice;
     private Integer colorId;
     private Integer configId;
+    private List<String> images;
+
 }

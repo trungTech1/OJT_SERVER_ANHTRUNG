@@ -26,11 +26,21 @@ public class ProductDetailController {
     @PostMapping("/create/{productId}")
     public ResponseEntity<Object> addProductDetail(@PathVariable Integer productId, @RequestBody ProductDetailRequest productDetailRes) {
         try {
-            System.out.println("productId: " + productId);
           ProductDetailModel productDetailResp = productDetailService.save(productDetailRes, productId);
             return new ResponseEntity<>(productDetailResp, HttpStatus.OK);
         } catch (Exception e) {
+            System.err.println("Error saving product detail: " + e.getMessage());
             return new ResponseEntity<>("Add ProductDetail fail", HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @PutMapping("/update/{productDetailId}")
+    public ResponseEntity<Object> updateProductDetail(@PathVariable Integer productDetailId, @RequestBody ProductDetailRequest productDetailRes) {
+        try {
+            ProductDetailModel productDetailResp = productDetailService.update(productDetailRes, productDetailId);
+            return new ResponseEntity<>(productDetailResp, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>("Update ProductDetail fail", HttpStatus.BAD_REQUEST);
         }
     }
 

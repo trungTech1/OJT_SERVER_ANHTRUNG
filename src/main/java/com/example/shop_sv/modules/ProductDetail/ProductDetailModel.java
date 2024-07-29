@@ -20,14 +20,10 @@ import java.util.List;
 @Table(name ="product_detail")
 @Entity
 @Builder
-@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class ProductDetailModel {
     @Id
     @GeneratedValue( strategy = GenerationType.IDENTITY)
     private Byte id;
-
-    @Column(name = "image", length = 255)
-    private String image = null;
 
     @Column(name = "product_detail_name", length = 255)
     private String productDetailName = null;
@@ -55,4 +51,9 @@ public class ProductDetailModel {
     @JoinColumn(name = "config_id")
     @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     private ConfigModel config = null;
+
+    @OneToMany(mappedBy = "productDetail", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JsonManagedReference
+    private List<ProductDetailImageModel> productDetailImages;
+
 }
